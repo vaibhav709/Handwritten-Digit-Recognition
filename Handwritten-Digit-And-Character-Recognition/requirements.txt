@@ -1,5 +1,0 @@
-keras
-opencv-python
-requests
-tensorflow
-joblib
