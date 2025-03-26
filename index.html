@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handwritten Digit Recognition</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Handwritten Digit Recognition</h1>
+    <form id="upload-form">
+        <input type="file" id="image-input" accept="image/*">
+        <button type="submit">Predict</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fileInput = document.getElementById('image-input');
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imagePath = e.target.result;
+                // Call the Anvil server function to predict the digit
+                anvil.call('predict_digit', imagePath).then(function(prediction) {
+                    document.getElementById('result').innerText = 'Predicted Digit: ' + prediction;
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html>
